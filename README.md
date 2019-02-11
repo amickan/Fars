@@ -3,4 +3,6 @@
 You can install this packages using </br></br>
 ```install.packages("devtools")``` </br>
 ```devtools::install_github("amickan/Fars")```</br></br>
-https://travis-ci.org/amickan/Fars
+
+## Travis Badge
+[![Travis-CI Build Status](https://travis-ci.org/amickan/fars.svg?branch=master)](https://travis-ci.org/amickan/fars)
