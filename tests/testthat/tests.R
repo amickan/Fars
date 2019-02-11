@@ -4,16 +4,12 @@ library(dplyr)
 library(tidyr)
 load_all()
 
-path_data <- normalizePath("/Users/annemickan/Documents/SoftwareDevelopmentR/Course 3/TestPackage/")
+setwd(system.file("data", package = "fars"))
 
-# fars_read test
-path_data_2014 <- normalizePath(paste0(path_data,
-                                       "/data/",
-                                       "accident_2014.csv.bz2"))
 # load data conventionally
-data_2014 <- read.csv(path_data_2014)
+data_2014 <- read.csv("accident_2014.csv.bz2")
 # load data with the package's function
-data_2014_fars <- fars_read(path_data_2014)
+data_2014_fars <- fars_read("accident_2014.csv.bz2")
 
 # compare the output
 test_that("fars_read output", {
