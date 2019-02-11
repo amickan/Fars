@@ -1,0 +1,123 @@
+---
+title: "FARS functions"
+author: "Anne Mickan"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r, include=FALSE}
+library(dplyr)
+library(readr)
+library(tidyr)
+library(maps)
+library(graphics)
+```
+
+```{r far_functions, include=FALSE}
+fars_read <- function(filename) {
+        if(!file.exists(filename))
+                stop("file '", filename, "' does not exist")
+        data <- suppressMessages({
+                readr::read_csv(filename, progress = FALSE)
+        })
+        dplyr::tbl_df(data)
+}
+make_filename <- function(year) {
+        year <- as.integer(year)
+        sprintf("accident_%d.csv.bz2", year)
+}
+fars_read_years <- function(years) {
+        lapply(years, function(year) {
+                file <- make_filename(year)
+                tryCatch({
+                        dat <- fars_read(file)
+                        dplyr::mutate(dat, year = year) %>%
+                          dplyr::select(MONTH, year)
+                }, error = function(e) {
+                        warning("invalid year: ", year)
+                        return(NULL)
+                })
+        })
+}
+fars_summarize_years <- function(years) {
+        dat_list <- fars_read_years(years)
+        dplyr::bind_rows(dat_list) %>%
+                dplyr::group_by(year, MONTH) %>%
+                dplyr::summarize(n = n()) %>%
+                tidyr::spread(year, n)
+}
+fars_map_state <- function(state.num, year) {
+        filename <- make_filename(year)
+        data <- fars_read(filename)
+        state.num <- as.integer(state.num)
+        if(!(state.num %in% unique(data$STATE)))
+                stop("invalid STATE number: ", state.num)
+        data.sub <- dplyr::filter(data, STATE == state.num)
+        if(nrow(data.sub) == 0L) {
+                message("no accidents to plot")
+                return(invisible(NULL))
+        }
+        is.na(data.sub$LONGITUD) <- data.sub$LONGITUD > 900
+        is.na(data.sub$LATITUDE) <- data.sub$LATITUDE > 90
+        with(data.sub, {
+                maps::map("state", ylim = range(LATITUDE, na.rm = TRUE),
+                          xlim = range(LONGITUD, na.rm = TRUE))
+                graphics::points(LONGITUD, LATITUDE, pch = 46)
+        })
+}
+```
+
+#### `fars` TUTORIAL 
+### How to use the `fars` functions. 
+
+The package includes functions for reading, summarizing and graphing data from the current working directory. 
+The data are from the Fatality Analysis Reporting System, and have to be structured in this specific way for the 
+functions to work. ([FARS](https://www.nhtsa.gov/research-data/fatality-analysis-reporting-system-fars)).
+
+## *Create a file name*
+
+All files read in and processed by functions in this package should follow the following naming convention:
+         
+ accident_*year*.csv.bz2
+
+To create file names based on a given *year*, use `make_filename(year)`.
+
+```{r make_filename}
+# creating file name for the year 2013
+name_2013 <- make_filename(2013)
+name_2013
+```
+## *Import data*
+
+Once a filename has been created, you can read the data for that year in by using `fars_read`. 
+```{r fars_read}
+# creating file name for year 2014
+name_2014 <- make_filename(2014)
+# reading in data from 2014
+data_2014 <- fars_read(name_2014)
+# show the first 6 rows of the data
+head(data_2014)
+```
+
+## *Sumarize data*
+
+For one or more years, you can get a summary display of the number of observations per month for each year with the function `fars_summarize_years(years)`
+
+```{r fars_summarize_years}
+years <- c(2013, 2014, 2015)
+sum_years <- fars_summarize_years(years)
+sum_years
+```
+
+
+## *Graph data*
+
+The `fars_map_state()` function creates a map of a chosen state and plots the number of casualties reported within a chosen year *year* for that *state* geographically onto the state map. 
+
+```{r fars_map_state, fig.align='center'}
+fars_map_state(4, 2013)
+fars_map_state(10, 2015)
+```
