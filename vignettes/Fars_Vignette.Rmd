@@ -14,11 +14,11 @@ library(readr)
 library(tidyr)
 library(maps)
 library(graphics)
-library(fars)
+library(Fars)
 ```
 
-#### `fars` TUTORIAL 
-### How to use the `fars` functions. 
+#### `Fars` TUTORIAL 
+### How to use the `Fars` functions. 
 
 The package includes functions for reading, summarizing and graphing data from the current working directory. 
 The data are from the Fatality Analysis Reporting System, and have to be structured in this specific way for the 
