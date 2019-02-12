@@ -25,8 +25,9 @@ The data are shown seperately for each year in the period.
 }
 
 \examples{
+\dontrun{
 # Summary with the fatality counts in 2013.
 fars_summarize_years(2013)
 # Summary with the fatality counts in 2013 and 2014.
-fars_summarize_years(c(2013, 2014))
+fars_summarize_years(c(2013, 2014))}
 }

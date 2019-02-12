@@ -24,5 +24,6 @@ specific year. The map corresponds to the shape of the state, and shows where th
 }
 
 \examples{
-fars_map_state(12, 2015)
+\dontrun{
+fars_map_state(12, 2013)}
 }

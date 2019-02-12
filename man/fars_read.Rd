@@ -7,7 +7,7 @@
 fars_read(filename)
 }
 \arguments{
-\item{filename}{The name of the compressed file you want to read in (a string value). 
+\item{filename}{The name of the compressed file you want to read in (a string value).
 You can provide the full file path rather than setting the working directory before running this function.}
 }
 \value{
@@ -24,5 +24,6 @@ format and returns them in a
 }
 
 \examples{
-fars_read("YourComputer/FolderWithData/accident_2013.csv.bz2")
+\dontrun{
+fars_read("YourComputer/FolderWithData/accident_2013.csv.bz2")}
 }

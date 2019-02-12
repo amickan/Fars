@@ -23,6 +23,7 @@ a specific year.
 }
 
 \examples{
+\dontrun{
 Creating the filename for year 2013:
-make_filename(2013)
+make_filename(2013)}
 }

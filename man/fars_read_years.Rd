@@ -25,8 +25,9 @@ create a new variable (MONTH) in the dataset. Fatalities are then shown per year
 }
 
 \examples{
+\dontrun{
 # Data with the car fatalities in 2013.
 fars_read_years(2013)
 # Data with the car fatalities in 2013 and 2014.
-fars_read_years(c(2013, 2014))
+fars_read_years(c(2013, 2014))}
 }
