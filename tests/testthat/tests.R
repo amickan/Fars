@@ -1,8 +1,5 @@
-library(devtools)
-library(testthat)
 library(dplyr)
 library(tidyr)
-load_all()
 
 setwd(system.file("extdata", package = "Fars"))
 
