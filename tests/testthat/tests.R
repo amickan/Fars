@@ -4,7 +4,7 @@ library(dplyr)
 library(tidyr)
 load_all()
 
-setwd(system.file("data", package = "fars"))
+setwd(system.file("extdata", package = "Fars"))
 
 # load data conventionally
 data_2014 <- read.csv("accident_2014.csv.bz2")
