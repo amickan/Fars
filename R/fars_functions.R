@@ -4,7 +4,7 @@
 #' format and returns them in a
 #' \href{https://blog.rstudio.org/2016/03/24/tibble-1-0-0/}{tibble} object.
 #'
-#' @param filename The name of the compressed file you want to read in (a string value). 
+#' @param filename The name of the compressed file you want to read in (a string value).
 #' You can provide the full file path rather than setting the working directory before running this function.
 #' @return A tibble object with the contents of the filename.
 #' @export
@@ -13,7 +13,8 @@
 #' @section Warning:
 #'    If the file does not exist, the function will show an error.
 #' @examples
-#' fars_read("YourComputer/FolderWithData/accident_2013.csv.bz2")
+#' \dontrun{
+#' fars_read("YourComputer/FolderWithData/accident_2013.csv.bz2")}
 fars_read <- function(filename) {
   if(!file.exists(filename))
     stop("file '", filename, "' does not exist")
@@ -35,8 +36,9 @@ fars_read <- function(filename) {
 #' @section Warning:
 #'    If the \code{year} parameter cannot be coerced as an integer, an error will be thrown.
 #' @examples
+#' \dontrun{
 #' Creating the filename for year 2013:
-#' make_filename(2013)
+#' make_filename(2013)}
 make_filename <- function(year) {
   year <- as.integer(year)
   sprintf("accident_%d.csv.bz2", year)
@@ -57,10 +59,11 @@ make_filename <- function(year) {
 #'    If a file does not exist for a specific year, the function will
 #'    show a warning that the information was not read for that year.
 #' @examples
+#' \dontrun{
 #' # Data with the car fatalities in 2013.
 #' fars_read_years(2013)
 #' # Data with the car fatalities in 2013 and 2014.
-#' fars_read_years(c(2013, 2014))
+#' fars_read_years(c(2013, 2014))}
 fars_read_years <- function(years) {
   lapply(years, function(year) {
     file <- make_filename(year)
@@ -79,7 +82,7 @@ fars_read_years <- function(years) {
 #'
 #' This function creates a summary table with the counts of car fatalities reported
 #' by the US National Highway Traffic Safety Administration for a specific period.
-#' The data are shown seperately for each year in the period. 
+#' The data are shown seperately for each year in the period.
 #'
 #' @inheritParams fars_read_years
 #' @return A \href{https://blog.rstudio.org/2016/03/24/tibble-1-0-0/}{tibble}
@@ -91,10 +94,11 @@ fars_read_years <- function(years) {
 #'    If a file does not exist for a specific year, the function will
 #'    throw a warning that the information cannot be accessed.
 #' @examples
+#' \dontrun{
 #' # Summary with the fatality counts in 2013.
 #' fars_summarize_years(2013)
 #' # Summary with the fatality counts in 2013 and 2014.
-#' fars_summarize_years(c(2013, 2014))
+#' fars_summarize_years(c(2013, 2014))}
 fars_summarize_years <- function(years) {
   dat_list <- fars_read_years(years)
   dplyr::bind_rows(dat_list) %>%
@@ -120,7 +124,8 @@ fars_summarize_years <- function(years) {
 #'    If there are no fatalities in the given year and the given state,
 #'    the function will stop and state that there are no fatalities to show.
 #' @examples
-#' fars_map_state(12, 2013)
+#' \dontrun{
+#' fars_map_state(12, 2013)}
 fars_map_state <- function(state.num, year) {
   filename <- make_filename(year)
   data <- fars_read(filename)
