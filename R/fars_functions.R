@@ -120,7 +120,7 @@ fars_summarize_years <- function(years) {
 #'    If there are no fatalities in the given year and the given state,
 #'    the function will stop and state that there are no fatalities to show.
 #' @examples
-#' fars_map_state(12, 2015)
+#' fars_map_state(12, 2013)
 fars_map_state <- function(state.num, year) {
   filename <- make_filename(year)
   data <- fars_read(filename)
