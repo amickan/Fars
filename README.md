@@ -5,4 +5,4 @@ You can install this packages using </br></br>
 ```devtools::install_github("amickan/Fars")```</br></br>
 
 ## Travis Badge
-[![Travis-CI Build Status](https://travis-ci.org/amickan/fars.svg?branch=master)](https://travis-ci.org/amickan/fars)
+[![Build Status](https://travis-ci.org/amickan/Fars.svg?branch=master)](https://travis-ci.org/amickan/Fars)
