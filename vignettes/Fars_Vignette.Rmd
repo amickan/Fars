@@ -43,6 +43,7 @@ Once a filename has been created, you can read the data for that year in by usin
 ```{r fars_read}
 # creating file name for year 2014
 name_2014 <- make_filename(2014)
+setwd(system.file("data", package = "fars"))
 # reading in data from 2014
 data_2014 <- fars_read(name_2014)
 # show the first 6 rows of the data
@@ -55,6 +56,7 @@ For one or more years, you can get a summary display of the number of observatio
 
 ```{r fars_summarize_years}
 years <- c(2013, 2014, 2015)
+setwd(system.file("data", package = "fars"))
 sum_years <- fars_summarize_years(years)
 sum_years
 ```
@@ -65,6 +67,7 @@ sum_years
 The `fars_map_state()` function creates a map of a chosen state and plots the number of casualties reported within a chosen year *year* for that *state* geographically onto the state map. 
 
 ```{r fars_map_state, fig.align='center'}
+setwd(system.file("data", package = "fars"))
 fars_map_state(4, 2013)
 fars_map_state(10, 2015)
 ```
